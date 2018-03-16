@@ -4,6 +4,8 @@
  */
 
 const debug = require('debug')('notes')
+const path = require('path')
+const fs = require('fs')
 
 module.exports = function (app) {
   const error = app.error || (msg => {console.error(msg)})
@@ -34,9 +36,21 @@ module.exports = function (app) {
   }
 
   function registerRoutes() {
+    let notesPath = path.join(app.config.configPath, "/notes")
 
     app.get(apiRoutePrefix + "/notes", (req, res) => {
-      res.json({})
+      let dir = fs.readdirSync(notesPath)
+      let r = {}
+      for(var i=0; i<dir.length; i++) {
+        let text = fs.readFileSync(notesPath+'/'+dir[i], {encoding: 'utf8'})
+        r[dir[i]] = JSON.parse(text)
+      }
+      res.json(r)
+    })
+
+    app.get(apiRoutePrefix + "/notes/:identifier", (req, res) => {
+      const { identifier } = req.params
+      res.json(JSON.parse(fs.readFileSync(notesPath+'/'+identifier, {encoding: 'utf8'})))
     })
   }
 
