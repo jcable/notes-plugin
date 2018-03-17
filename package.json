@@ -18,5 +18,12 @@
   "bugs": {
     "url": "https://github.com/jcable/notes-plugin/issues"
   },
-  "homepage": "https://github.com/jcable/notes-plugin#readme"
+  "homepage": "https://github.com/jcable/notes-plugin#readme",
+  "devDependencies": {
+    "@turf/boolean-contains": "^6.0.0",
+    "turf": "^3.0.14"
+  },
+  "dependencies": {
+    "@turf/turf": "^5.1.6"
+  }
 }
